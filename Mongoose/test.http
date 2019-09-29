@@ -1,0 +1,5 @@
+###
+@uri = http://www.baidu.com/
+
+###
+GET {{uri}}
