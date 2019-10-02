@@ -1,0 +1,30 @@
+@uri = http://localhost:5269/api
+@json=Content-Type: application/json
+
+###
+GET {{uri}}
+
+### 查看所有用户
+GET {{uri}}/users
+
+### 注册
+POST {{uri}}/register
+{{json}}
+
+{
+    "username": "ly",
+    "password": "123456"
+}
+
+### 登录
+POST {{uri}}/login
+{{json}}
+
+{
+    "username": "ly",
+    "password": "123456"
+}
+
+### 获取个人信息
+GET {{uri}}/profile
+Authorization: Barer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTQ3NGI4MmU4NzM0MmRkODRhNjg3MyIsImlhdCI6MTU3MDAxMTcxM30.i1tBVh4wlBocKAVQ_Cz4tKzx4cvDK-38nkrlRI5UK9s
