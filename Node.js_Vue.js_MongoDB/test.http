@@ -1,0 +1,15 @@
+###
+@uri = http://127.0.0.1:3000/admin/api/
+
+###
+POST {{uri}}/categories
+Content-Type: application/json
+
+{
+    "name": "liuyang"
+}
+
+###
+GET {{uri}}/categories
+
+
