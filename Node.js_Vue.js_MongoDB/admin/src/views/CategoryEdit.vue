@@ -26,6 +26,7 @@ export default {
   props: {
     id: {}
   },
+
   data() {
     return {
       model: {},
@@ -37,9 +38,9 @@ export default {
     async save() {
       let res;
       if (this.id) {
-        res = await this.$http.put(`categories/${this.id}`, this.model);
+        res = await this.$http.put(`rest/categories/${this.id}`, this.model);
       } else {
-        res = await this.$http.post('categories', this.model);        
+        res = await this.$http.post('rest/categories', this.model);        
       }
 
       console.log(res.toString());
@@ -51,17 +52,18 @@ export default {
     },
 
     async fetch() {
-      const res = await this.$http.get(`categories/${this.id}`);
+      const res = await this.$http.get(`rest/categories/${this.id}`);
       this.model = res.data;
     },
 
     async fetchParents() {
       // 之后，后端写一个 categories/parentoption
-      const res = await this.$http.get('categories');
+      const res = await this.$http.get('rest/categories');
       this.parents = res.data;
     }
 
   },
+  
   created() {
     this.fetchParents();
     this.id && this.fetch();

@@ -1,13 +1,9 @@
 ###
-@uri = http://127.0.0.1:3000/admin/api/
+@uri = http://127.0.0.1:3000/admin/api/rest
 
 ###
 POST {{uri}}/categories
 Content-Type: application/json
-
-{
-    "name": "liuyang"
-}
 
 ###
 GET {{uri}}/categories

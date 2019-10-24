@@ -66,6 +66,25 @@ const model = await Category.find().populate();
 ```
 
 ## Vue
-* 需要重新学习的内容
-    1. props
-    2. slot
+* slot
+    * 匿名插槽 <slot> </slot>
+    * 具名插槽 <slot name="fuck"> </slot>
+    * 作用域插槽
+        * 父组件有数据不知道怎么渲染，传递给子组件
+        * 子组件渲染完了，不知道这数据有什么用，通过 在子组件里 加上 <slot :todo="todo"> </slot>
+        * 父组件通过下述方式，就能从子组件拿到数据了，关于这里的template，被一个不可见的元素包裹，方便渲染用，在dom中并没有这个
+        * 换成div也能跑，但dom中就有这个标签了
+        ``` js
+        <child-component :todos="todos">
+            <template slot-scope="scope">
+                {{scope.todo}}
+            </template>
+        </child-component>
+        ```
+
+## inflection
+    * classify
+## multer
+
+## vue2-editor
+    * 富文本编辑器
