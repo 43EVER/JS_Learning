@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>test</title>
+        <script src="./jquery.js"></script>
+        <script src="./vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div id="test-show-hide" style="width: 100px; height: 100px; background-color: #00ccff;">
+                test
+            </div>
+            <button @click="toggle">b</button>
+        </div>
+    </body>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            
+            methods: {
+                toggle() {
+                    let div = $('#test-show-hide');
+                    div.animate({
+                        opacity: 0.3
+                    }, 3000, () => {
+                        alert('yes');
+                    })
+                }
+            }
+        });
+    </script>
+</html>
+
