@@ -88,3 +88,5 @@ const model = await Category.find().populate();
 
 ## vue2-editor
     * 富文本编辑器
+
+## jsonwebtoken
