@@ -84,9 +84,19 @@ const model = await Category.find().populate();
 
 ## inflection
     * classify
+
 ## multer
+    * express里上传文件的中间件
 
 ## vue2-editor
     * 富文本编辑器
 
 ## jsonwebtoken
+    * sign(), verify
+
+## bcrypt
+    * 用来加密用户数据的
+    * hashSync(), compareSync()
+
+## chrome里拿数据的方法
+    * $$('<selector>', '上下文')

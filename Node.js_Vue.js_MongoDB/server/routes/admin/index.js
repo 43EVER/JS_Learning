@@ -29,7 +29,7 @@ module.exports = app => {
             if (req.Model.modelName == 'Category')
                 queryOptions.populate = 'parent';
         }
-        const items = await req.Model.find().setOptions(queryOptions).limit(10);
+        const items = await req.Model.find().setOptions(queryOptions).limit(100);
         res.send(items);
     });
 
@@ -49,7 +49,6 @@ module.exports = app => {
     
     // 根据URL拿到Model，并挂载到req上
     app.use('/admin/api/rest/:resource', authMiddleware(), resourceMiddleware(), router);
-
     const multer = require('multer');
     const upload = multer({dest: __dirname + '/../../uploads'});
     app.post('/admin/api/upload', authMiddleware(), upload.single('file'), async(req, res) => {

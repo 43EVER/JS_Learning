@@ -15,9 +15,20 @@
               class="avatar-uploader"
               :action="$http.defaults.baseURL + 'upload'"
               :show-file-list="false"
-              :on-success="afterUpload"
-            >
+              :headers="getAuthHeaders()"
+              :on-success="(res) => $set(model, 'avatar', res.url)">
               <img v-if="model.avatar" :src="model.avatar" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="背景图">
+            <el-upload
+              class="avatar-uploader"
+              :action="$http.defaults.baseURL + 'upload'"
+              :headers="getAuthHeaders()"
+              :show-file-list="false"
+              :on-success="(res) => $set(model, 'banner', res.url)">
+              <img v-if="model.banner" :src="model.banner" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
@@ -67,16 +78,25 @@
           <el-form-item label="团战技巧">
             <el-input v-model="model.teamTips" type="textarea"></el-input>
           </el-form-item>
-          <el-form-item label="搭档">
-            <el-select v-model="model.partners" multiple>
-              <el-option
-                v-for="item of heroes"
-                :key="item._id"
-                :label="item.name"
-                :value="item._id"
-              ></el-option>
-            </el-select>
-          </el-form-item>
+          <el-button type="text" @click="model.partners.push({})">
+            <i class="el-icon-plus"></i>添加搭档
+          </el-button>
+          <el-row type="flex" style="flex-wrap: wrap;">
+            <el-col :md="12" v-for="(item, idx) in model.partners" :key="idx">
+              <el-form-item label="英雄">
+                <el-select filterable v-model="item.hero">
+                  <el-option v-for="hero in heroes" :key="hero._id" :value="hero._id" :label="hero.name">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="描述">
+                <el-input v-model="item.description"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="danger" @click="model.partners.splice(idx, 1)">删除</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-tab-pane>
         <el-tab-pane label="技能" name="skills">
           <el-button type="text" @click="model.skills.push({})">
@@ -92,10 +112,17 @@
                   class="avatar-uploader"
                   :action="$http.defaults.baseURL + 'upload'"
                   :show-file-list="false"
+                  :headers="getAuthHeaders()"
                   :on-success="(res) => $set(item, 'icon', res.url)">
                   <img v-if="item.icon" :src="item.icon" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
+              </el-form-item>
+              <el-form-item label="冷却">
+                <el-input v-model="item.delay"></el-input>
+              </el-form-item>
+              <el-form-item label="消耗">
+                <el-input v-model="item.cost"></el-input>
               </el-form-item>
               <el-form-item label="描述">
                 <el-input v-model="item.description" type="textarea"></el-input>
@@ -141,24 +168,21 @@ export default {
           attack: 0,
           survive: 0
         },
-        skills: []
+        skills: [],
+        partners: []
       }
     };
   },
 
   methods: {
-    afterUpload(res) {
-      this.model.avatar = res.url;
-    },
 
     async save() {
-      let res;
+      let res = {};
       if (this.id) {
         res = await this.$http.put(`rest/heroes/${this.id}`, this.model);
       } else {
         res = await this.$http.post("rest/heroes", this.model);
       }
-
       console.log(res.toString());
       this.$router.push("/heroes/list");
       this.$message({
